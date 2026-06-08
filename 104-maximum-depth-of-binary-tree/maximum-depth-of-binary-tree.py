@@ -1,27 +1,14 @@
-from collections import deque
-
 class Solution(object):
     def maxDepth(self, root):
+        """
+        :type root: Optional[TreeNode]
+        :rtype: int
+        """
         
         if not root:
             return 0
         
-        queue = deque([root])
-        depth = 0
-        
-        while queue:
-            
-            depth += 1
-            
-            for _ in range(len(queue)):
-                
-                node = queue.popleft()
-                
-                if node.left:
-                    queue.append(node.left)
-                
-                if node.right:
-                    queue.append(node.right)
-        
-        return depth
-        
+        return 1 + max(
+            self.maxDepth(root.left),
+            self.maxDepth(root.right)
+        )
