@@ -2,7 +2,7 @@ class WordDictionary {
 
     class TrieNode {
         TrieNode[] children = new TrieNode[26];
-        boolean isEnd = false;
+        boolean isEnd;
     }
 
     private TrieNode root;
@@ -13,19 +13,19 @@ class WordDictionary {
 
     public void addWord(String word) {
 
-        TrieNode node = root;
+        TrieNode curr = root;
 
-        for (char ch : word.toCharArray()) {
-            int index = ch - 'a';
+        for (char c : word.toCharArray()) {
+            int index = c - 'a';
 
-            if (node.children[index] == null) {
-                node.children[index] = new TrieNode();
+            if (curr.children[index] == null) {
+                curr.children[index] = new TrieNode();
             }
 
-            node = node.children[index];
+            curr = curr.children[index];
         }
 
-        node.isEnd = true;
+        curr.isEnd = true;
     }
 
     public boolean search(String word) {
@@ -40,9 +40,9 @@ class WordDictionary {
         if (pos == word.length())
             return node.isEnd;
 
-        char ch = word.charAt(pos);
+        char c = word.charAt(pos);
 
-        if (ch == '.') {
+        if (c == '.') {
 
             for (TrieNode child : node.children) {
                 if (child != null && dfs(word, pos + 1, child))
@@ -52,6 +52,6 @@ class WordDictionary {
             return false;
         }
 
-        return dfs(word, pos + 1, node.children[ch - 'a']);
+        return dfs(word, pos + 1, node.children[c - 'a']);
     }
 }
